@@ -27,7 +27,7 @@ export class AppComponent {
       isCompleted: false
     }
   ];
-  todoCount = 0;
+  todoCount = this.changeCount();
   
   AddItem(event){
     //console.log(event);
@@ -35,27 +35,39 @@ export class AppComponent {
       item: event.target.value, 
       isCompleted: false})
     event.target.value = "";
+
+    //更新計數
+    this.todoCount = this.changeCount();
   }
 
   RemoveItem(idx){
     this.todoList.splice(idx, 1);
+
+    //更新計數
+    this.todoCount = this.changeCount();
   }
 
   AllComplete(){
     this.todoList.forEach(todo =>  {
       todo.isCompleted = true;
    });
+    //更新計數
+    this.todoCount = this.changeCount();
   }
 
   RemoveCompleted(){
-
+    this.todoList = this.todoList.filter(item => item.isCompleted == false);
   }
 
   ChangeStatus(todo: ToDo){
     todo.isCompleted = !todo.isCompleted;
+
+    //更新計數
+    this.todoCount = this.changeCount();
   }
 
   changeCount(){
-    
+    let tmpList = this.todoList.filter(item => item.isCompleted == false);
+    return tmpList.length;
   }
 }
