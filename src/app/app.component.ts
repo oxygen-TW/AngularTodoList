@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'todo';
+  title = 'myToDo';
+  inputPlaceHolder = "What needs to be done??";
+  
+  showInput(event){
+    console.log(event);
+    event.target.value = "";
+  }
 }
