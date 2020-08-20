@@ -1,7 +1,7 @@
 <section class="todoapp">
   <header class="header">
     <h1>{{ title }}</h1>
-    <input class="new-todo" (keyup.enter)="showInput($event)" [placeholder]="inputPlaceHolder" autofocus>
+    <input class="new-todo" (keyup.enter)="AddItem($event)" [placeholder]="inputPlaceHolder" autofocus>
   </header>
   <!-- This section should be hidden by default and shown when there are todos -->
   <section class="main">
@@ -10,6 +10,15 @@
     <ul class="todo-list">
       <!-- These are here just to show the structure of the list items -->
       <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+      <li *ngFor="let todo of todoList; let idx=index">
+        <div class="view">
+          <input class="toggle" type="checkbox" [checked]="todo.isCompleted">
+          <label>{{ todo.item }}</label>
+          <button class="destroy" (click)="RemoveItem(idx)"></button>
+        </div>
+        <input class="edit" value="Create a TodoMVC template">
+      </li>
+      <!--
       <li class="completed">
         <div class="view">
           <input class="toggle" type="checkbox" checked>
@@ -26,6 +35,7 @@
         </div>
         <input class="edit" value="Rule the web">
       </li>
+    -->
     </ul>
   </section>
   <!-- This footer should hidden by default and shown when there are todos -->
@@ -45,7 +55,7 @@
       </li>
     </ul>
     <!-- Hidden if no completed items are left ↓ -->
-    <button class="clear-completed">Clear completed</button>
+    <button class="clear-completed" (click)="RemoveCompleted()">Clear completed</button>
   </footer>
 </section>
 <footer class="info">
