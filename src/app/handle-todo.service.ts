@@ -46,4 +46,7 @@ export class HandleTodoService {
     this.todoList = this.todoList.filter(item => item.isCompleted == false);
   }
 
+  getTodoCount(){
+    return this.todoList.filter(item => item.isCompleted == false).length;
+  }
 }

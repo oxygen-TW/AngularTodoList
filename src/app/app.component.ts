@@ -18,19 +18,15 @@ export class AppComponent implements DoCheck {
   title = 'myToDo';
   inputPlaceHolder = "What needs to be done??";
   newTodo = "default Value";
-  todoCount = this.changeCount();
+  todoCount = this.service.getTodoCount();
+  //todoList = this.service.todoList;
 
   constructor(public service: HandleTodoService){ };
   
-  todoList = this.service.todoList;
-  
+
   AddItem(event){
     this.service.AddItem(event);
     event.target.value = "";
-  }
-
-  RemoveItem(idx){
-    this.service.RemoveItem(idx);
   }
 
   AllComplete(){
@@ -40,13 +36,9 @@ export class AppComponent implements DoCheck {
   RemoveCompleted(){
     this.service.RemoveCompleted();
   }
-
-  changeCount(){
-    return this.service.todoList.filter(item => item.isCompleted == false).length;
-  }
-
+  
   //當畫面有變更時即會執行(參考 Angular 生命週期)
   ngDoCheck(){
-    this.todoCount = this.changeCount();
+    this.todoCount = this.service.getTodoCount();
   } 
 }
