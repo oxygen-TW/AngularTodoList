@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 //純開發使用
@@ -13,7 +13,7 @@ interface ToDo{
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements DoCheck {
   title = 'myToDo';
   inputPlaceHolder = "What needs to be done??";
   newTodo = "default Value";
@@ -35,39 +35,28 @@ export class AppComponent {
       item: event.target.value, 
       isCompleted: false})
     event.target.value = "";
-
-    //更新計數
-    this.todoCount = this.changeCount();
   }
 
   RemoveItem(idx){
     this.todoList.splice(idx, 1);
-
-    //更新計數
-    this.todoCount = this.changeCount();
   }
 
   AllComplete(){
     this.todoList.forEach(todo =>  {
       todo.isCompleted = true;
    });
-    //更新計數
-    this.todoCount = this.changeCount();
   }
 
   RemoveCompleted(){
     this.todoList = this.todoList.filter(item => item.isCompleted == false);
   }
 
-  ChangeStatus(todo: ToDo){
-    todo.isCompleted = !todo.isCompleted;
-
-    //更新計數
-    this.todoCount = this.changeCount();
-  }
-
   changeCount(){
-    let tmpList = this.todoList.filter(item => item.isCompleted == false);
-    return tmpList.length;
+    return this.todoList.filter(item => item.isCompleted == false).length;
   }
+
+  //當畫面有變更時即會執行(參考 Angular 生命週期)
+  ngDoCheck(){
+    this.todoCount = this.changeCount();
+  } 
 }
