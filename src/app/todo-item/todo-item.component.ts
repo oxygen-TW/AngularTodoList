@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
+import { HandleTodoService } from "../handle-todo.service";
 //純開發使用
 interface ToDo{
   item: string,
@@ -25,7 +25,12 @@ export class TodoItemComponent implements OnInit {
     todo.isCompleted = !todo.isCompleted;
   }
 
-  constructor() { }
+  //TypeScript 語法
+  //指定型別後自動注入
+  //Service 為全域共用
+  constructor(private service: HandleTodoService) {
+    console.log(this.service.title);
+   }
 
   ngOnInit(): void {
   }

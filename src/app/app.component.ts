@@ -1,5 +1,6 @@
 import { Component, DoCheck } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HandleTodoService } from './handle-todo.service';
 
 //純開發使用
 interface ToDo{
@@ -17,42 +18,31 @@ export class AppComponent implements DoCheck {
   title = 'myToDo';
   inputPlaceHolder = "What needs to be done??";
   newTodo = "default Value";
-  todoList :ToDo[] = [
-    {
-      item: "Buy Milk",
-      isCompleted: false
-    },
-    {
-      item: "Work",
-      isCompleted: false
-    }
-  ];
   todoCount = this.changeCount();
+
+  constructor(public service: HandleTodoService){ };
+  
+  todoList = this.service.todoList;
   
   AddItem(event){
-    //console.log(event);
-    this.todoList.push({
-      item: event.target.value, 
-      isCompleted: false})
+    this.service.AddItem(event);
     event.target.value = "";
   }
 
   RemoveItem(idx){
-    this.todoList.splice(idx, 1);
+    this.service.RemoveItem(idx);
   }
 
   AllComplete(){
-    this.todoList.forEach(todo =>  {
-      todo.isCompleted = true;
-   });
+    this.service.AllComplete();
   }
 
   RemoveCompleted(){
-    this.todoList = this.todoList.filter(item => item.isCompleted == false);
+    this.service.RemoveCompleted();
   }
 
   changeCount(){
-    return this.todoList.filter(item => item.isCompleted == false).length;
+    return this.service.todoList.filter(item => item.isCompleted == false).length;
   }
 
   //當畫面有變更時即會執行(參考 Angular 生命週期)
