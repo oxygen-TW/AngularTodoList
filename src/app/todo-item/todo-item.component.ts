@@ -3,6 +3,7 @@ import { HandleTodoService } from "../handle-todo.service";
 
 //純開發使用
 interface ToDo{
+  id: number,
   item: string,
   isCompleted: boolean
 }

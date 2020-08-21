@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
   transform(value: any[], cond: string): unknown {
-    console.log(value, cond)
+    //console.log(value, cond)
     if(cond === "all"){
       return value;
     }

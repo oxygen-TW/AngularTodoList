@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 //純開發使用
 interface ToDo{
+  id: number,
   item: string,
   isCompleted: boolean
 }
@@ -11,25 +12,30 @@ interface ToDo{
 })
 
 export class HandleTodoService {
+  key = 0;
   //title = "title from service";
 
   todoList :ToDo[] = [
     {
+      id: 1,
       item: "Buy Milk",
       isCompleted: false
     },
     {
+      id: 2,
       item: "Work",
       isCompleted: false
     }
   ];
-
+ 
   constructor() { }
 
   AddItem(event){
+    this.key += 1;
     //為了Pure Pipe新增全新陣列
     //注意 "..." 的操作方法
     this.todoList = [ ... this.todoList, {
+      id: this.key,
       item: event.target.value, 
       isCompleted: false}]
   }
