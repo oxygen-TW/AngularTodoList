@@ -9,8 +9,9 @@ interface ToDo{
 @Injectable({
   providedIn: 'root'
 })
+
 export class HandleTodoService {
-  title = "title from service";
+  //title = "title from service";
 
   todoList :ToDo[] = [
     {
@@ -26,13 +27,15 @@ export class HandleTodoService {
   constructor() { }
 
   AddItem(event){
-    //console.log(event);
-    this.todoList.push({
+    //為了Pure Pipe新增全新陣列
+    //注意 "..." 的操作方法
+    this.todoList = [ ... this.todoList, {
       item: event.target.value, 
-      isCompleted: false})
+      isCompleted: false}]
   }
 
   RemoveItem(idx){
+    this.todoList = this.todoList.slice();
     this.todoList.splice(idx, 1);
   }
 
@@ -44,6 +47,11 @@ export class HandleTodoService {
 
   RemoveCompleted(){
     this.todoList = this.todoList.filter(item => item.isCompleted == false);
+  }
+
+  ChangeStatus(todo: ToDo){
+    todo.isCompleted = !todo.isCompleted;
+    this.todoList = this.todoList.slice(); 
   }
 
   getTodoCount(){
