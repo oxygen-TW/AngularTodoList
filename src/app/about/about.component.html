@@ -1,2 +1,9 @@
-<p>about works!</p>
-<button (click)="gotoTodo();" style="cursor: pointer;">Go to Todo</button>
+<button (click)="gotoTodo();" style="cursor: pointer; margin-top: 12px;">Go back to Todo</button>
+
+<ul>
+    <li *ngFor="let user of users">
+        <a routerLink="." [queryParams]="{'userId':user.id}">
+            {{ user.name }}
+        </a>
+    </li>
+</ul>
