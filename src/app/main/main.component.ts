@@ -20,11 +20,15 @@ export class MainComponent implements DoCheck{
   constructor(public service: HandleTodoService, private route: ActivatedRoute, private router: Router){
     this.route.queryParamMap.subscribe({
       next: (params) => {
-        if(params.get("cond") == undefined)
-          this.cond = "all";
-        else
+        if(params.get("cond") == null){
+          this.cond = this.route.snapshot.data.cond;
+        }         
+        else{
           this.cond = params.get("cond");
-      }
+        }       
+      },
+      error: (err) =>{},
+      complete: () => {}
     })
    };
   
