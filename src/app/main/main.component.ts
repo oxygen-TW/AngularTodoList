@@ -1,13 +1,15 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HandleTodoService } from '../handle-todo.service';
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements DoCheck {
+
+export class MainComponent implements DoCheck{
   title = 'myToDo';
   inputPlaceHolder = "What needs to be done??";
   newTodo = "default Value";
@@ -15,7 +17,16 @@ export class MainComponent implements DoCheck {
   cond = "all";
 
   //Component 建構涵式
-  constructor(public service: HandleTodoService){ };
+  constructor(public service: HandleTodoService, private route: ActivatedRoute, private router: Router){
+    this.route.queryParamMap.subscribe({
+      next: (params) => {
+        if(params.get("cond") == undefined)
+          this.cond = "all";
+        else
+          this.cond = params.get("cond");
+      }
+    })
+   };
   
   AddItem(event){
     this.service.AddItem(event);
@@ -29,9 +40,9 @@ export class MainComponent implements DoCheck {
   RemoveCompleted(){
     this.service.RemoveCompleted();
   }
-  
-  setCond(flag: string){
-    this.cond = flag;
+
+  gotoAbout(){
+    this.router.navigate(['./about'], { relativeTo: this.route});
   }
 
   //當畫面有變更時即會執行(參考 Angular 生命週期)
