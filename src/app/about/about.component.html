@@ -1,12 +1,32 @@
 <button (click)="gotoTodo();" style="cursor: pointer; margin-top: 12px;">Go back to Todo</button>
 
 <ul>
-    <li *ngFor="let user of users">
+    <li *ngFor="let user of users | async ">
         <a routerLink="." [queryParams]="{'userId':user.id}">
             {{ user.name }}
         </a>
     </li>
 </ul>
-<pre>
-    {{ user | json}}
-</pre>
+<!-- template driven form --> 
+<div *ngIf="user | async as data">
+    <form #formData="ngForm" (ngSubmit)="save(formData)">
+        <div>
+            <label>Name</label>
+            <input name="name" [(ngModel)]="data.name" />
+        </div>
+        <div>
+            <label>User Name</label>
+            <input name="username" [(ngModel)]="data.username" />
+        </div>
+        <div>
+            <label>Email</label>
+            <input name="email" [(ngModel)]="data.email" />
+        </div>
+        <button [disabled]="formData.invalid">送出</button>
+    </form>
+    {{ formData.valid }}
+    {{ formData.value | json }}
+</div>
+<!-- <pre>
+    {{ user | json }}
+</pre> -->
