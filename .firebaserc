@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dsc-angular-todo": {
+      "hosting": {
+        "todo": [
+          "dsc-angular-todo"
+        ]
+      }
+    }
+  }
+}

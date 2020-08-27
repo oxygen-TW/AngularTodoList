@@ -49,6 +49,9 @@ export class MainComponent implements DoCheck{
     this.router.navigate(['./about'], { relativeTo: this.route});
   }
 
+  gotoContact(){
+    this.router.navigate(['./contact'], { relativeTo: this.route});
+  }
   //當畫面有變更時即會執行(參考 Angular 生命週期)
   ngDoCheck(){
     this.todoCount = this.service.getTodoCount();

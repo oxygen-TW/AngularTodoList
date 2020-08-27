@@ -9,6 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AboutComponent } from './about/about.component';
 import { HttpClientModule } from "@angular/common/http";
 import { ContactComponent } from './contact/contact.component';
+import { AngularFireModule } from "@angular/fire";
+import { environment } from '../environments/environment';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
   //data: 同步資料
@@ -28,9 +33,11 @@ const routes: Routes = [
     FilterPipe,
     MainComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    AuthComponent
   ],
-  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule, ReactiveFormsModule, AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebase),AngularFireAnalyticsModule,AngularFirestoreModule],
   providers: [],
   bootstrap: [AppComponent]
 })
