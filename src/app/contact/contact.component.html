@@ -1,0 +1,26 @@
+<form [formGroup]="formData">
+    <div>
+        <label for="">姓名</label>
+        <input formControlName="name" type="text">
+    </div>
+    <div>
+        <label for="">Email</label>
+        <input formControlName="email" type="text">
+    </div>
+    <div formGroupName="shipping">
+        <label for="">運送地址</label>
+        <div>
+            <label for="">縣市別</label>
+            <input formControlName="city" type="text">
+            <label for="">地址</label>
+            <input formControlName="address" type="text">
+        </div>
+    </div>
+</form>
+
+<pre>
+{{ formData.value | json }}
+</pre>
+
+<code>{{ formData.get("name").errors | json }}</code>
+<code>{{ formData.invalid }}</code>

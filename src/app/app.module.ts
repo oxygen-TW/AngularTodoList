@@ -5,9 +5,10 @@ import { AppComponent } from './app.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { FilterPipe } from './filter.pipe';
 import { MainComponent } from './main/main.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AboutComponent } from './about/about.component';
 import { HttpClientModule } from "@angular/common/http";
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
   //data: 同步資料
@@ -16,7 +17,8 @@ const routes: Routes = [
   {path: "", component: MainComponent, data:{
     cond: "all"
   }},
-  {path: "about", component: AboutComponent}
+  {path: "about", component: AboutComponent},
+  {path: "contact", component: ContactComponent}
 ]
 
 @NgModule({
@@ -25,9 +27,10 @@ const routes: Routes = [
     TodoItemComponent,
     FilterPipe,
     MainComponent,
-    AboutComponent
+    AboutComponent,
+    ContactComponent
   ],
-  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })
