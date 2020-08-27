@@ -41,8 +41,31 @@ export class ContactComponent implements OnInit {
     shipping: this.fb.group({
       city: "",
       address: ""
-    })
+    }),
+    contactNumber: this.fb.array([
+      this.fb.group({
+          phoneType: "",
+          phoneNumber: ""
+      })
+    ])
   });
+
+  get contactNumbersArray(){
+    return this.formData.get("contactNumber") as FormArray;
+  }
+
+  AddContact(){
+    this.formData.getRawValue();
+    this.contactNumbersArray.push( this.fb.group({phoneType: "",phoneNumber: ""}))
+  }
+
+  RemoveContact(idx){
+    this.contactNumbersArray.removeAt(idx);
+  }
+
+  clearAll(){
+    this.contactNumbersArray.clear();
+  }
 
   ngOnInit(): void {
     this.formData.controls.name.valueChanges.subscribe({

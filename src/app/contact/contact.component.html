@@ -15,6 +15,23 @@
             <label for="">地址</label>
             <input formControlName="address" type="text">
         </div>
+        <div formArrayName="contactNumber">
+            <button (click)="AddContact()">Add contact number</button>
+            <ul>
+                <li *ngFor="let group of contactNumbersArray.controls; let idx=index;">
+                    <div [formGroup]="group">
+                        <label for="">運送地址</label>
+                        <div>
+                            <label for="">類別</label>
+                            <input formControlName="phoneType" type="text">
+                            <label for="">電話號碼</label>
+                            <input formControlName="phoneNumber" type="text">
+                            <button (click)="RemoveContact(idx)">Remove contact number</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </form>
 
