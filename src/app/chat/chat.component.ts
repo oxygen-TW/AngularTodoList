@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit {
         return { id, ...data};
       }))
     );
+    console.log(this.chats);
    }
 
   Send(){

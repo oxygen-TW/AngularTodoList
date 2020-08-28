@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
+import { observable, Observable } from 'rxjs';
 
 //純開發使用
 interface ToDo{
   id: number,
   item: string,
   isCompleted: boolean
+}
+
+interface ToDoDB{
+  id: string,
+  name: string,
+  createTime: string,
+  status: boolean
 }
 
 @Injectable({
@@ -17,7 +25,7 @@ export class HandleTodoService {
   key = 0;
   //title = "title from service";
   todoCollection: AngularFirestoreCollection<any>;
-  todos;
+  public todos : Observable<ToDoDB[]>;;
 
 
   todoList :ToDo[] = [

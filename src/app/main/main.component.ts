@@ -15,7 +15,7 @@ export class MainComponent implements DoCheck{
   newTodo = "default Value";
   todoCount = this.service.getTodoCount();
   cond = "all";
-  todo = this.service.todos;
+  todoList = this.service.todos;
 
   //Component 建構涵式
   constructor(public service: HandleTodoService, private route: ActivatedRoute, private router: Router){
@@ -31,7 +31,9 @@ export class MainComponent implements DoCheck{
       error: (err) =>{},
       complete: () => {}
     })
-   };
+
+    //console.log(this.todoList.length);
+   }
   
   AddItem(event){
     this.service.AddItem(event);
