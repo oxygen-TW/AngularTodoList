@@ -12,10 +12,10 @@ export class FilterPipe implements PipeTransform {
       return value;
     }
     if(cond === "active"){
-      return value.filter(x => !x.isCompleted);
+      return value.filter(x => !x.status);
     }
     if(cond === "completed"){
-      return value.filter(x => x.isCompleted);
+      return value.filter(x => x.status);
     }
     
   }

@@ -20,8 +20,9 @@ export class TodoItemComponent implements OnInit {
 
   @Output() remove = new EventEmitter();
 
-  RemoveTodo(idx){
+  RemoveTodo(idx, id){
     this.service.RemoveItem(idx);
+    this.service.RemoveDBItem(id);
   }
 
   ChangeStatus(todo: ToDo){
@@ -31,7 +32,7 @@ export class TodoItemComponent implements OnInit {
   //TypeScript 語法
   //指定型別後自動注入
   //Service 為全域共用
-  constructor(private service: HandleTodoService) {
+  constructor(public service: HandleTodoService) {
     //console.log(this.service.title);
    }
 

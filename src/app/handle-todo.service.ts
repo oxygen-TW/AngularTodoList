@@ -14,7 +14,7 @@ interface ToDoDB{
   id: string,
   name: string,
   createTime: string,
-  status: boolean
+  status: boolean 
 }
 
 @Injectable({
@@ -42,7 +42,7 @@ export class HandleTodoService {
   ];
  
   constructor(private firestoreService: AngularFirestore) { 
-    this.todoCollection = this.firestoreService.collection("todo", ref => ref.orderBy("CreateBy"));
+    this.todoCollection = this.firestoreService.collection("todo", ref => ref.orderBy("createTime"));
     //this.chats = this.chatsCollection.valueChanges()
 
     this.todos = this.todoCollection.snapshotChanges().pipe(
@@ -75,11 +75,16 @@ export class HandleTodoService {
   RemoveItem(idx){
     this.todoList = this.todoList.slice();
     this.todoList.splice(idx, 1);
-  }
+  } 
 
+  RemoveDBItem(id){
+    const doc = this.todoCollection.doc(id);
+    doc.delete();
+  }
+  
   AllComplete(){
-    this.todoList.forEach(todo =>  {
-      todo.isCompleted = true;
+    this.todos.forEach(todo =>  {
+      //todo.status = true;
    });
   }
 
@@ -87,9 +92,10 @@ export class HandleTodoService {
     this.todoList = this.todoList.filter(item => item.isCompleted == false);
   }
 
-  ChangeStatus(todo: ToDo){
-    todo.isCompleted = !todo.isCompleted;
-    this.todoList = this.todoList.slice(); 
+  ChangeStatus({ id, ...item }){
+    item.status = !item.status;
+    const doc = this.todoCollection.doc(id);
+    doc.update(item);
   }
 
   getTodoCount(){
