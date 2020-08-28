@@ -15,6 +15,7 @@ export class MainComponent implements DoCheck{
   newTodo = "default Value";
   todoCount = this.service.getTodoCount();
   cond = "all";
+  todo = this.service.todos;
 
   //Component 建構涵式
   constructor(public service: HandleTodoService, private route: ActivatedRoute, private router: Router){
@@ -51,6 +52,10 @@ export class MainComponent implements DoCheck{
 
   gotoContact(){
     this.router.navigate(['./contact'], { relativeTo: this.route});
+  }
+
+  gotoChat(){
+    this.router.navigate(['./chat'], { relativeTo: this.route});   
   }
   //當畫面有變更時即會執行(參考 Angular 生命週期)
   ngDoCheck(){

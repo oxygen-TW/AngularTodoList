@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { map } from "rxjs/operators";
 
 //純開發使用
 interface ToDo{
@@ -14,6 +16,9 @@ interface ToDo{
 export class HandleTodoService {
   key = 0;
   //title = "title from service";
+  todoCollection: AngularFirestoreCollection<any>;
+  todos;
+
 
   todoList :ToDo[] = [
     {
@@ -28,7 +33,18 @@ export class HandleTodoService {
     }
   ];
  
-  constructor() { }
+  constructor(private firestoreService: AngularFirestore) { 
+    this.todoCollection = this.firestoreService.collection("todo", ref => ref.orderBy("CreateBy"));
+    //this.chats = this.chatsCollection.valueChanges()
+
+    this.todos = this.todoCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data};
+      }))
+    );
+  }
 
   AddItem(event){
     this.key += 1;
@@ -38,6 +54,14 @@ export class HandleTodoService {
       id: this.key,
       item: event.target.value, 
       isCompleted: false}]
+
+    //DataBase
+    this.todoCollection.add({
+      name: event.target.value,
+      createTime: new Date(),
+      user: "tester",
+      status: false
+    }).then(() => event.target.value = "");
   }
 
   RemoveItem(idx){
