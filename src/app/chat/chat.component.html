@@ -1,0 +1,10 @@
+<h2>chat room!</h2>
+<ul>
+    <li *ngFor="let chat of chats | async">
+        {{ chat.id }} - {{ chat.message | json }}
+        <input [(ngModel)]="chat.message" (blur)="update(chat)"/>
+        <button (click)="remove(chat.id)" style="cursor: pointer;"> | Remove</button>
+    </li>
+</ul>
+<input [(ngModel)]="message"/> &nbsp;
+<button (click)="Send()"  style="cursor: pointer;">Send</button>

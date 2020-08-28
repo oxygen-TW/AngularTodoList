@@ -14,6 +14,9 @@ import { environment } from '../environments/environment';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AuthComponent } from './auth/auth.component';
+import { AngularFirestore } from "@angular/fire/firestore";
+import { ChatComponent } from './chat/chat.component';
+import { DatabaseComponent } from './database/database.component';
 
 const routes: Routes = [
   //data: 同步資料
@@ -23,7 +26,8 @@ const routes: Routes = [
     cond: "all"
   }},
   {path: "about", component: AboutComponent},
-  {path: "contact", component: ContactComponent}
+  {path: "contact", component: ContactComponent},
+  {path: "chat", component: ChatComponent}
 ]
 
 @NgModule({
@@ -34,7 +38,9 @@ const routes: Routes = [
     MainComponent,
     AboutComponent,
     ContactComponent,
-    AuthComponent
+    AuthComponent,
+    ChatComponent,
+    DatabaseComponent
   ],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes), HttpClientModule, ReactiveFormsModule, AngularFireModule,
     AngularFireModule.initializeApp(environment.firebase),AngularFireAnalyticsModule,AngularFirestoreModule],
