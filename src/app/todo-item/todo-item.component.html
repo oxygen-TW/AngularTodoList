@@ -1,6 +1,6 @@
 <div class="view">
     <input class="toggle" type="checkbox" [checked]="todo.status" (click)="ChangeStatus(todo)">
     <label>{{ todo.name }}</label>
-    <button class="destroy" (click)="this.service.RemoveDBItem( todo.id )"></button>
+    <button class="destroy" (click)="this.service.RemoveItem( todo.id )"></button>
   </div>
   <input class="edit" value="Create a TodoMVC template"> 

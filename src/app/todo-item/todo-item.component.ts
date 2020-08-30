@@ -1,13 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HandleTodoService } from "../handle-todo.service";
 
-//純開發使用
-interface ToDo{
-  id: number,
-  item: string,
-  isCompleted: boolean
-}
-
 @Component({
   selector: 'app-todo-item',
   templateUrl: './todo-item.component.html',
@@ -20,12 +13,11 @@ export class TodoItemComponent implements OnInit {
 
   @Output() remove = new EventEmitter();
 
-  RemoveTodo(idx, id){
-    this.service.RemoveItem(idx);
-    this.service.RemoveDBItem(id);
+  RemoveTodo(id){
+    this.service.RemoveItem(id);
   }
 
-  ChangeStatus(todo: ToDo){
+  ChangeStatus(todo){
     this.service.ChangeStatus(todo);
   }
 
