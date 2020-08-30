@@ -57,25 +57,28 @@ export class HandleTodoService {
   }
   
   AllComplete(){    
-    this.todos.subscribe({
+    let s = this.todos.subscribe({
       next: x => {
         x.forEach(element => {
          element.status = true;
          const doc = this.todoCollection.doc(element.id);
          doc.update(element);
         });
+        s.unsubscribe(); //重要 但我不知道為什麼
       }
     })
   }
 
   RemoveCompleted(){
-    this.todos.subscribe({
+    let s = this.todos.subscribe({
       next: x => {
         x.forEach(element => {
          if(element.status == true){
-          this.RemoveItem(element.id)
+          this.RemoveItem(element.id);
+          console.log("delete: "+ element.id)
          }
         });
+        s.unsubscribe();  //重要 但我不知道為什麼
       }
     })
   }
@@ -88,5 +91,11 @@ export class HandleTodoService {
 
   getTodoCount(){
     //return this.todoList.filter(item => item.isCompleted == false).length;
+    // let s = this.todos.subscribe({
+    //   next: x => {
+    //     //s.unsubscribe();  //重要 但我不知道為什麼
+    //     return x.filter(item => item.status == true).length;
+    //   }
+    // }) 
   }
 }
