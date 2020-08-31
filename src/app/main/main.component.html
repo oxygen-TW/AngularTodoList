@@ -22,13 +22,13 @@
     <!-- Remove this if you don't implement routing -->
     <ul class="filters">
       <li>
-        <a [class]="{'selected': cond === 'all'}" routerLink="/" [queryParams]="{cond: 'all'}">All</a>
+        <a [class]="{'selected': cond === 'all'}" routerLink="/todo" [queryParams]="{cond: 'all'}">All</a>
       </li>
       <li>
-        <a [class]="{'selected': cond === 'active'}" routerLink="/" [queryParams]="{cond: 'active'}">Active</a>
+        <a [class]="{'selected': cond === 'active'}" routerLink="/todo" [queryParams]="{cond: 'active'}">Active</a>
       </li>
       <li>
-        <a [class]="{'selected': cond === 'completed'}" routerLink="/" [queryParams]="{cond: 'completed'}">Completed</a>
+        <a [class]="{'selected': cond === 'completed'}" routerLink="/todo" [queryParams]="{cond: 'completed'}">Completed</a>
       </li>
     </ul>
     <!-- Hidden if no completed items are left ↓ -->

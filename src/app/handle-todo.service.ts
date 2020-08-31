@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit, AfterViewInit, DoCheck } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 import { observable, Observable } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
-interface ToDoDB{
+interface ToDo{
   id: string,
   name: string,
   createTime: string,
@@ -14,14 +16,35 @@ interface ToDoDB{
   providedIn: 'root'
 })
 
-export class HandleTodoService {
+export class HandleTodoService implements DoCheck{
   key = 0;
+  UserId = "tester";
   //title = "title from service";
   todoCollection: AngularFirestoreCollection<any>;
-  public todos : Observable<ToDoDB[]>;;
+  CollectionForAdd: AngularFirestoreCollection<any>;
+  public todos : Observable<ToDo[]>;;
  
-  constructor(private firestoreService: AngularFirestore) { 
-    this.todoCollection = this.firestoreService.collection("todo", ref => ref.orderBy("createTime"));
+   constructor(private firestoreService: AngularFirestore, public auth: AngularFireAuth) { 
+    //this.SetUid("bs5TqvzfrFXI0dzJOh0o1ZNiJrC3");
+    this.auth.user.subscribe({
+      next: state => {
+        this.SetUid(state.uid);
+      },
+      complete: () => { console.log("End")}
+    })
+  
+    console.log("ckp1:" + this.UserId);
+    this.ReloadData();
+    /*while(this.UserId == "tester"){
+    }*/
+  }
+
+  async ReloadData(){
+    console.log("ckp2:" + this.UserId);
+    this.todoCollection = this.firestoreService.collection<ToDo>("todo", ref => ref.where("user", "==", this.UserId));
+    this.todoCollection.ref.orderBy("createTime");
+    this.CollectionForAdd = this.firestoreService.collection("todo", ref => ref.orderBy("createTime"));
+    //this.todoCollection = this.firestoreService.collection("todo", ref => ref.orderBy("createTime"));
     //this.chats = this.chatsCollection.valueChanges()
 
     this.todos = this.todoCollection.snapshotChanges().pipe(
@@ -32,21 +55,20 @@ export class HandleTodoService {
       }))
     );
   }
+  SplitUserData(){
+    let tmpQuerySnapshot = this.todoCollection.get();
 
+  }
+  SetUid(uid: string){
+    this.UserId = uid;
+    console.log("Service:"+this.UserId);
+  }
   AddItem(event){
-    this.key += 1;
-    //為了Pure Pipe新增全新陣列
-    //注意 "..." 的操作方法
-    // this.todoList = [ ... this.todoList, {
-    //   id: this.key,
-    //   item: event.target.value, 
-    //   isCompleted: false}]
-
     //DataBase
     this.todoCollection.add({
       name: event.target.value,
       createTime: new Date(),
-      user: "tester",
+      user: this.UserId,
       status: false
     }).then(() => event.target.value = "");
   }
@@ -97,5 +119,10 @@ export class HandleTodoService {
     //     return x.filter(item => item.status == true).length;
     //   }
     // }) 
+  }
+
+  ngDoCheck(){
+    console.log("ckp3:" + this.UserId);
+    this.ReloadData();
   }
 }

@@ -1,5 +1,6 @@
 <div *ngIf="auth.user | async as user; else showLogin">
     <p>Hello {{ user.displayName }}!</p>
+    <script>this.redir();</script>
     <button (click)="logout()">Logout</button>
   </div>
   <ng-template #showLogin>

@@ -32,7 +32,6 @@ export class MainComponent implements DoCheck{
       complete: () => {}
     })
 
-    //console.log(this.todoList.length);
    }
   
   AddItem(event){

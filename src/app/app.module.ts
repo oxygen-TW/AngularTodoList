@@ -21,7 +21,8 @@ const routes: Routes = [
   //data: 同步資料
   //resolve: 非同步，可以先取得api資料，也是在.data中取得
   //data和resolve內容不能重複
-  {path: "", component: MainComponent, data:{
+  {path: "", component: AuthComponent},
+  {path: "todo", component: MainComponent, data:{
     cond: "all"
   }},
   {path: "about", component: AboutComponent},
